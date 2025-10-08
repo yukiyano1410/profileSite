@@ -4,6 +4,7 @@ const pages = {
     <h2>趣味</h2>
     <p>ラノベ読んだりゲームしたりと娯楽を楽しみまくっている</p>
     <p>こっから画像はるなり、おすすめ作品語るなり好きにしろ 中央で分割するためにbootstrap使うなりするのが楽か？</p>
+    <img src="image/hobby/monhan.jpg" class="thumbnail" alt="作品画像" style="width:300px; cursor:pointer;">
   `,
 
   study: `
@@ -44,6 +45,7 @@ const content = document.getElementById("content");
 // ページ切り替えイベント
 document.getElementById("btn-hobby").addEventListener("click", () => {
   content.innerHTML = pages.hobby;
+  setupImageModal(); // hobby ページで画像拡大を設定
 });
 
 document.getElementById("btn-study").addEventListener("click", () => {
@@ -57,6 +59,7 @@ document.getElementById("btn-works").addEventListener("click", () => {
 
 // 初期表示
 content.innerHTML = pages.hobby;
+setupImageModal(); // 初期表示にも設定
 
 // ▼ 折りたたみを設定する関数
 function setupToggle() {
@@ -72,5 +75,23 @@ function setupToggle() {
         ? toggle.textContent.replace("▼", "▲")
         : toggle.textContent.replace("▲", "▼");
     });
+  });
+}
+
+// ▼ 画像クリックでモーダル拡大を設定
+function setupImageModal() {
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("modalImg");
+
+  document.querySelectorAll(".thumbnail").forEach(img => {
+    img.addEventListener("click", () => {
+      modalImg.src = img.src;
+      modal.style.display = "flex";
+    });
+  });
+
+  // モーダル背景クリックで閉じる
+  modal.addEventListener("click", () => {
+    modal.style.display = "none";
   });
 }
